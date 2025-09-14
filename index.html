@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Disaster Monitoring System - ISRO Prototype</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ddd, transparent),
+                linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%);
+            background-repeat: repeat;
+            background-size: 200px 100px, 300px 150px, 400px 200px, 500px 250px, 600px 300px, 100% 100%;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at top, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at left, rgba(119, 198, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at right, rgba(198, 255, 119, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        /* Header - Mobile First */
+        .header {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 15px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            width: 90%;
+            max-width: 350px;
+        }
+
+        .header h1 {
+            font-size: 16px;
+            margin-bottom: 3px;
+            background: linear-gradient(45deg, #00d4ff, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .header p {
+            font-size: 11px;
+            opacity: 0.8;
+            line-height: 1.3;
+        }
+
+        /* Earth - Mobile First */
+        .earth {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #4a90e2, #7bb3f0, #4a90e2);
+            box-shadow: 
+                0 0 30px rgba(74, 144, 226, 0.5),
+                inset -10px -10px 30px rgba(0, 0, 0, 0.3);
+            animation: earthRotate 20s linear infinite;
+        }
+
+        .earth::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 30%;
+            width: 40%;
+            height: 30%;
+            background: #2d5016;
+            border-radius: 50% 30% 40% 20%;
+            opacity: 0.8;
+        }
+
+        .earth::after {
+            content: '';
+            position: absolute;
+            top: 60%;
+            left: 60%;
+            width: 25%;
+            height: 20%;
+            background: #2d5016;
+            border-radius: 30% 50% 20% 40%;
+            opacity: 0.8;
+        }
+
+        @keyframes earthRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Satellites - Mobile First */
+        .satellite {
+            position: absolute;
+            width: 40px;
+            height: 15px;
+            background: linear-gradient(45deg, #c0c0c0, #e0e0e0);
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .satellite::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -10px;
+            width: 20px;
+            height: 6px;
+            background: linear-gradient(45deg, #4169e1, #6495ed);
+            border-radius: 3px;
+        }
+
+        .satellite::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            right: -10px;
+            width: 20px;
+            height: 6px;
+            background: linear-gradient(45deg, #4169e1, #6495ed);
+            border-radius: 3px;
+        }
+
+        .satellite1 {
+            top: 20%;
+            left: 20%;
+            animation: orbit1 15s linear infinite;
+        }
+
+        .satellite2 {
+            top: 30%;
+            right: 20%;
+            animation: orbit2 18s linear infinite;
+        }
+
+        .satellite3 {
+            bottom: 25%;
+            left: 30%;
+            animation: orbit3 12s linear infinite;
+        }
+
+        @keyframes orbit1 {
+            0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
+
+        @keyframes orbit2 {
+            0% { transform: rotate(0deg) translateX(-80px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(-80px) rotate(-360deg); }
+        }
+
+        @keyframes orbit3 {
+            0% { transform: rotate(0deg) translateX(70px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(70px) rotate(-360deg); }
+        }
+
+        /* ISRO Database - Mobile First */
+        .isro-database {
+            position: absolute;
+            top: 8%;
+            right: 8%;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+            font-size: 8px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* AI Processing Center - Mobile First */
+        .ai-center {
+            position: absolute;
+            bottom: 12%;
+            right: 12%;
+            width: 80px;
+            height: 50px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 10px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+            animation: aiProcess 3s ease-in-out infinite;
+        }
+
+        @keyframes aiProcess {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 0 0 30px rgba(255, 107, 107, 0.8);
+            }
+        }
+
+        /* Data Flow Lines - Mobile First */
+        .data-flow {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            animation: dataFlow 2s linear infinite;
+        }
+
+        .flow1 {
+            top: 25%;
+            left: 30%;
+            width: 120px;
+            transform: rotate(45deg);
+        }
+
+        .flow2 {
+            top: 35%;
+            right: 30%;
+            width: 100px;
+            transform: rotate(-45deg);
+        }
+
+        .flow3 {
+            bottom: 30%;
+            left: 40%;
+            width: 80px;
+            transform: rotate(30deg);
+        }
+
+        @keyframes dataFlow {
+            0% { opacity: 0; transform: scaleX(0); }
+            50% { opacity: 1; transform: scaleX(1); }
+            100% { opacity: 0; transform: scaleX(0); }
+        }
+
+        /* Disaster Detection - Mobile First */
+        .disaster {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            animation: disasterPulse 1.5s ease-in-out infinite;
+        }
+
+        .flood {
+            top: 45%;
+            left: 15%;
+            background: radial-gradient(circle, #0066cc, #004499);
+        }
+
+        .cyclone {
+            top: 25%;
+            right: 25%;
+            background: radial-gradient(circle, #ff4444, #cc0000);
+        }
+
+        .drought {
+            bottom: 35%;
+            right: 20%;
+            background: radial-gradient(circle, #ffaa00, #cc8800);
+        }
+
+        @keyframes disasterPulse {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% { 
+                transform: scale(1.3);
+                opacity: 1;
+            }
+        }
+
+        /* Alert System - Mobile First */
+        .alert-panel {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            width: auto;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+            padding: 15px;
+            backdrop-filter: blur(10px);
+            border: 2px solid #ff6b6b;
+            animation: alertGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes alertGlow {
+            0%, 100% { border-color: #ff6b6b; }
+            50% { border-color: #ff4444; }
+        }
+
+        .alert-title {
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: center;
+            margin: 6px 0;
+            padding: 4px;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .alert-icon {
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        /* Control Panel - Mobile First */
+        .control-panel {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .control-btn {
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            border: none;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+            transition: all 0.3s ease;
+            min-width: 60px;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Status Indicators - Mobile First */
+        .status {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 11px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: statusBlink 1s ease-in-out infinite;
+        }
+
+        .online { background: #00ff00; }
+        .processing { background: #ffaa00; }
+        .alert { background: #ff0000; }
+
+        @keyframes statusBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Tablet and Desktop Responsive */
+        @media (min-width: 768px) {
+            .header {
+                top: 20px;
+                padding: 15px 30px;
+                width: auto;
+                max-width: none;
+            }
+            
+            .header h1 { font-size: 24px; }
+            .header p { font-size: 14px; }
+            
+            .earth { 
+                width: 200px; 
+                height: 200px; 
+            }
+            
+            .satellite { 
+                width: 60px; 
+                height: 20px; 
+            }
+            
+            .satellite::before,
+            .satellite::after {
+                width: 30px;
+                height: 8px;
+                top: -5px;
+            }
+            
+            .satellite::before { left: -15px; }
+            .satellite::after { right: -15px; }
+            
+            .isro-database {
+                width: 80px;
+                height: 80px;
+                font-size: 10px;
+            }
+            
+            .ai-center {
+                width: 100px;
+                height: 60px;
+                font-size: 12px;
+            }
+            
+            .data-flow { height: 2px; }
+            .flow1 { width: 200px; }
+            .flow2 { width: 180px; }
+            .flow3 { width: 150px; }
+            
+            .disaster {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .alert-panel {
+                width: 300px;
+                left: 20px;
+                right: auto;
+                bottom: 20px;
+                padding: 20px;
+            }
+            
+            .alert-title { font-size: 16px; }
+            .alert-item { 
+                font-size: 14px;
+                margin: 8px 0;
+                padding: 5px;
+            }
+            .alert-icon { 
+                font-size: 16px;
+                margin-right: 10px;
+            }
+            
+            .control-panel {
+                top: 20px;
+                left: 20px;
+                padding: 15px;
+                display: block;
+            }
+            
+            .control-btn {
+                padding: 8px 15px;
+                margin: 5px;
+                font-size: 12px;
+                min-width: auto;
+            }
+            
+            .status {
+                left: 10px;
+                padding: 15px;
+            }
+            
+            .status-item {
+                margin: 10px 0;
+                font-size: 12px;
+            }
+            
+            .status-dot {
+                width: 10px;
+                height: 10px;
+                margin-right: 10px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .header h1 { font-size: 28px; }
+            .header p { font-size: 16px; }
+            
+            .earth { 
+                width: 250px; 
+                height: 250px; 
+            }
+            
+            .satellite { 
+                width: 80px; 
+                height: 25px; 
+            }
+            
+            .isro-database {
+                width: 100px;
+                height: 100px;
+                font-size: 12px;
+            }
+            
+            .ai-center {
+                width: 120px;
+                height: 80px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>AI-Powered Disaster Monitoring System</h1>
+            <p>ISRO Satellite Data Integration | Real-time AI Processing</p>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <button class="control-btn" onclick="startSystem()">Start System</button>
+            <button class="control-btn" onclick="simulateDisaster()">Simulate Disaster</button>
+            <button class="control-btn" onclick="resetSystem()">Reset</button>
+        </div>
+
+        <!-- Status Panel -->
+        <div class="status">
+            <div class="status-item">
+                <div class="status-dot online"></div>
+                <span>Satellites Online</span>
+            </div>
+            <div class="status-item">
+                <div class="status-dot processing"></div>
+                <span>AI Processing</span>
+            </div>
+            <div class="status-item">
+                <div class="status-dot alert"></div>
+                <span>Alert System</span>
+            </div>
+        </div>
+
+        <!-- Earth -->
+        <div class="earth"></div>
+
+        <!-- Satellites -->
+        <div class="satellite satellite1"></div>
+        <div class="satellite satellite2"></div>
+        <div class="satellite satellite3"></div>
+
+        <!-- ISRO Database -->
+        <div class="isro-database">
+            ISRO<br>DATABASE
+        </div>
+
+        <!-- AI Processing Center -->
+        <div class="ai-center">
+            AI<br>PROCESSING<br>CENTER
+        </div>
+
+        <!-- Data Flow Lines -->
+        <div class="data-flow flow1"></div>
+        <div class="data-flow flow2"></div>
+        <div class="data-flow flow3"></div>
+
+        <!-- Disaster Types -->
+        <div class="disaster flood" title="Flood Detection">🌊</div>
+        <div class="disaster cyclone" title="Cyclone Detection">🌀</div>
+        <div class="disaster drought" title="Drought Detection">☀️</div>
+
+        <!-- Alert Panel -->
+        <div class="alert-panel" id="alertPanel">
+            <div class="alert-title">🚨 DISASTER ALERTS</div>
+            <div class="alert-item">
+                <span class="alert-icon">📱</span>
+                <span>SMS Alerts: Active</span>
+            </div>
+            <div class="alert-item">
+                <span class="alert-icon">📲</span>
+                <span>Mobile App: Connected</span>
+            </div>
+            <div class="alert-item">
+                <span class="alert-icon">🏛️</span>
+                <span>Government Network: Online</span>
+            </div>
+            <div class="alert-item">
+                <span class="alert-icon">🔔</span>
+                <span>Real-time Monitoring: Active</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // System Status
+        let systemActive = false;
+        let disasterDetected = false;
+
+        // Start System
+        function startSystem() {
+            systemActive = true;
+            console.log('AI Disaster Monitoring System Started');
+            
+            // Animate data flow
+            animateDataFlow();
+            
+            // Start continuous monitoring
+            setInterval(monitorDisasters, 5000);
+            
+            // Update status
+            updateStatus('System Online', 'success');
+        }
+
+        // Simulate Disaster Detection
+        function simulateDisaster() {
+            if (!systemActive) {
+                alert('Please start the system first!');
+                return;
+            }
+
+            disasterDetected = true;
+            const disasters = ['flood', 'cyclone', 'drought'];
+            const randomDisaster = disasters[Math.floor(Math.random() * disasters.length)];
+            
+            // Trigger alert
+            triggerAlert(randomDisaster);
+            
+            // Update status
+            updateStatus(`Disaster Detected: ${randomDisaster.toUpperCase()}`, 'warning');
+        }
+
+        // Reset System
+        function resetSystem() {
+            systemActive = false;
+            disasterDetected = false;
+            console.log('System Reset');
+            updateStatus('System Reset', 'info');
+        }
+
+        // Animate Data Flow
+        function animateDataFlow() {
+            const flows = document.querySelectorAll('.data-flow');
+            flows.forEach((flow, index) => {
+                setTimeout(() => {
+                    flow.style.animation = 'none';
+                    setTimeout(() => {
+                        flow.style.animation = 'dataFlow 2s linear infinite';
+                    }, 100);
+                }, index * 500);
+            });
+        }
+
+        // Monitor Disasters
+        function monitorDisasters() {
+            if (!systemActive) return;
+            
+            // Simulate random disaster detection
+            if (Math.random() < 0.1) { // 10% chance every 5 seconds
+                simulateDisaster();
+            }
+        }
+
+        // Trigger Alert
+        function triggerAlert(disasterType) {
+            const alertPanel = document.getElementById('alertPanel');
+            
+            // Create new alert
+            const newAlert = document.createElement('div');
+            newAlert.className = 'alert-item';
+            newAlert.style.background = 'rgba(255, 0, 0, 0.2)';
+            newAlert.style.border = '1px solid #ff0000';
+            newAlert.innerHTML = `
+                <span class="alert-icon">⚠️</span>
+                <span>${disasterType.toUpperCase()} DETECTED - ${new Date().toLocaleTimeString()}</span>
+            `;
+            
+            // Add to top of alert panel
+            alertPanel.appendChild(newAlert);
+            
+            // Remove after 10 seconds
+            setTimeout(() => {
+                if (newAlert.parentNode) {
+                    newAlert.parentNode.removeChild(newAlert);
+                }
+            }, 10000);
+            
+            // Flash alert panel
+            alertPanel.style.animation = 'alertGlow 0.5s ease-in-out 3';
+        }
+
+        // Update Status
+        function updateStatus(message, type) {
+            console.log(`Status: ${message} (${type})`);
+            
+            // You can add visual status updates here
+            const statusItems = document.querySelectorAll('.status-item span');
+            if (statusItems.length > 0) {
+                statusItems[0].textContent = message;
+            }
+        }
+
+        // Initialize System
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('AI Disaster Monitoring System Initialized');
+            
+            // Auto-start system after 2 seconds
+            setTimeout(() => {
+                startSystem();
+            }, 2000);
+            
+            // Add click effects to satellites
+            const satellites = document.querySelectorAll('.satellite');
+            satellites.forEach(satellite => {
+                satellite.addEventListener('click', function() {
+                    this.style.transform += ' scale(1.2)';
+                    setTimeout(() => {
+                        this.style.transform = this.style.transform.replace(' scale(1.2)', '');
+                    }, 200);
+                });
+            });
+            
+            // Add click effects to Earth
+            const earth = document.querySelector('.earth');
+            earth.addEventListener('click', function() {
+                this.style.boxShadow = '0 0 100px rgba(74, 144, 226, 0.8)';
+                setTimeout(() => {
+                    this.style.boxShadow = '0 0 50px rgba(74, 144, 226, 0.5), inset -20px -20px 50px rgba(0, 0, 0, 0.3)';
+                }, 500);
+            });
+        });
+
+        // Keyboard Controls
+        document.addEventListener('keydown', function(event) {
+            switch(event.key) {
+                case 's':
+                case 'S':
+                    startSystem();
+                    break;
+                case 'd':
+                case 'D':
+                    simulateDisaster();
+                    break;
+                case 'r':
+                case 'R':
+                    resetSystem();
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>
+
