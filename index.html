@@ -197,7 +197,7 @@
         /* ISRO Database - Mobile First */
         .isro-database {
             position: absolute;
-            top: 12%;
+            top: 8%;
             right: 5%;
             width: 50px;
             height: 50px;
@@ -222,7 +222,7 @@
         /* AI Processing Center - Mobile First */
         .ai-center {
             position: absolute;
-            top: 15%;
+            top: 20%;
             right: 5%;
             width: 50px;
             height: 35px;
@@ -436,6 +436,276 @@
         .processing { background: #ffaa00; }
         .alert { background: #ff0000; }
 
+        /* Prototype Animation Elements */
+        .data-packet {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #00d4ff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00d4ff;
+            animation: dataPacketMove 3s ease-in-out;
+        }
+
+        .ai-processing-visual {
+            position: absolute;
+            width: 60px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: white;
+            font-weight: bold;
+            animation: aiProcessingPulse 2s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        .scientist-validation {
+            position: absolute;
+            width: 50px;
+            height: 30px;
+            background: linear-gradient(45deg, #4CAF50, #66BB6A);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 7px;
+            color: white;
+            font-weight: bold;
+            animation: scientistValidation 2s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        .notification-wave {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ff6b6b;
+            border-radius: 50%;
+            animation: notificationWave 2s ease-out infinite;
+            opacity: 0;
+        }
+
+        .cnn-visual {
+            position: absolute;
+            width: 40px;
+            height: 25px;
+            background: linear-gradient(45deg, #9C27B0, #BA68C8);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6px;
+            color: white;
+            font-weight: bold;
+            animation: cnnProcess 1.5s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        .lstm-visual {
+            position: absolute;
+            width: 40px;
+            height: 25px;
+            background: linear-gradient(45deg, #FF9800, #FFB74D);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6px;
+            color: white;
+            font-weight: bold;
+            animation: lstmProcess 1.5s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes dataPacketMove {
+            0% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.2);
+            }
+            100% { 
+                opacity: 0;
+                transform: scale(0.5);
+            }
+        }
+
+        @keyframes aiProcessingPulse {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes scientistValidation {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: scale(1.05);
+                opacity: 1;
+            }
+        }
+
+        @keyframes notificationWave {
+            0% { 
+                transform: scale(0.5);
+                opacity: 1;
+            }
+            100% { 
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes cnnProcess {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes lstmProcess {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        /* Dynamic Prototype Arrows - Only visible during workflow */
+        .prototype-arrow {
+            position: absolute;
+            height: 3px;
+            background: linear-gradient(90deg, #00d4ff, #ff6b6b);
+            border-radius: 2px;
+            opacity: 0;
+            z-index: 20;
+            box-shadow: 0 0 10px #00d4ff;
+        }
+
+        .prototype-arrow::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid #ff6b6b;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+        }
+
+        .arrow-step-1 {
+            top: 25%;
+            left: 35%;
+            width: 80px;
+            transform: rotate(25deg);
+        }
+
+        .arrow-step-2 {
+            top: 18%;
+            right: 15%;
+            width: 60px;
+            transform: rotate(-45deg);
+        }
+
+        .arrow-step-3 {
+            top: 35%;
+            right: 20%;
+            width: 100px;
+            transform: rotate(45deg);
+        }
+
+        .arrow-step-4 {
+            top: 30%;
+            left: 40%;
+            width: 70px;
+            transform: rotate(15deg);
+        }
+
+        @keyframes arrowAppear {
+            0% { 
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes arrowMove {
+            0% { 
+                background-position: 0% 0;
+                opacity: 1;
+            }
+            100% { 
+                background-position: 200% 0;
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes arrowDisappear {
+            0% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% { 
+                opacity: 0;
+                transform: scale(0.5);
+            }
+        }
+
+        /* Moving Data Packet */
+        .moving-data-packet {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #00d4ff;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #00d4ff;
+            opacity: 0;
+            z-index: 25;
+        }
+
+        @keyframes movePacket {
+            0% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.2);
+            }
+            100% { 
+                opacity: 0;
+                transform: scale(0.5);
+            }
+        }
+
         @keyframes statusBlink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
@@ -474,15 +744,44 @@
             .satellite::after { right: -15px; }
             
             .isro-database {
+                top: 10%;
+                right: 10%;
                 width: 80px;
                 height: 80px;
                 font-size: 10px;
             }
             
             .ai-center {
+                top: 25%;
+                right: 10%;
                 width: 100px;
                 height: 60px;
                 font-size: 12px;
+            }
+
+            /* Desktop Arrow Adjustments */
+            .arrow-satellite-to-isro {
+                top: 20%;
+                left: 30%;
+                width: 120px;
+            }
+
+            .arrow-isro-to-ai {
+                top: 15%;
+                right: 20%;
+                width: 80px;
+            }
+
+            .arrow-ai-to-earth {
+                top: 40%;
+                right: 25%;
+                width: 150px;
+            }
+
+            .arrow-satellite-to-ai {
+                top: 35%;
+                left: 35%;
+                width: 100px;
             }
             
             .data-flow { height: 2px; }
@@ -561,15 +860,44 @@
             }
             
             .isro-database {
+                top: 8%;
+                right: 8%;
                 width: 100px;
                 height: 100px;
                 font-size: 12px;
             }
             
             .ai-center {
+                top: 22%;
+                right: 8%;
                 width: 120px;
                 height: 80px;
                 font-size: 14px;
+            }
+
+            /* Large Desktop Arrow Adjustments */
+            .arrow-satellite-to-isro {
+                top: 18%;
+                left: 28%;
+                width: 140px;
+            }
+
+            .arrow-isro-to-ai {
+                top: 12%;
+                right: 18%;
+                width: 90px;
+            }
+
+            .arrow-ai-to-earth {
+                top: 38%;
+                right: 22%;
+                width: 170px;
+            }
+
+            .arrow-satellite-to-ai {
+                top: 33%;
+                left: 33%;
+                width: 110px;
             }
         }
     </style>
@@ -586,6 +914,7 @@
         <div class="control-panel">
             <button class="control-btn" onclick="startSystem()">Start System</button>
             <button class="control-btn" onclick="simulateDisaster()">Simulate Disaster</button>
+            <button class="control-btn" onclick="seePrototype()">See Prototype</button>
             <button class="control-btn" onclick="resetSystem()">Reset</button>
         </div>
 
@@ -627,6 +956,12 @@
         <div class="data-flow flow1"></div>
         <div class="data-flow flow2"></div>
         <div class="data-flow flow3"></div>
+
+        <!-- Dynamic Prototype Arrows (Only appear during workflow) -->
+        <div class="prototype-arrow arrow-step-1" id="arrow-step-1"></div>
+        <div class="prototype-arrow arrow-step-2" id="arrow-step-2"></div>
+        <div class="prototype-arrow arrow-step-3" id="arrow-step-3"></div>
+        <div class="prototype-arrow arrow-step-4" id="arrow-step-4"></div>
 
         <!-- Disaster Types -->
         <div class="disaster flood" title="Flood Detection">🌊</div>
@@ -699,6 +1034,336 @@
             disasterDetected = false;
             console.log('System Reset');
             updateStatus('System Reset', 'info');
+            
+            // Clear all prototype animations
+            clearPrototypeAnimations();
+        }
+
+        // See Prototype - Complete Workflow Animation
+        function seePrototype() {
+            if (!systemActive) {
+                alert('Please start the system first!');
+                return;
+            }
+
+            console.log('Starting Prototype Workflow...');
+            updateStatus('Prototype Workflow Started', 'processing');
+            
+            // Clear any existing animations
+            clearPrototypeAnimations();
+            
+            // Start the complete workflow
+            startPrototypeWorkflow();
+        }
+
+        // Clear all prototype animations
+        function clearPrototypeAnimations() {
+            const elementsToRemove = document.querySelectorAll('.data-packet, .ai-processing-visual, .scientist-validation, .notification-wave, .cnn-visual, .lstm-visual, .moving-data-packet');
+            elementsToRemove.forEach(element => element.remove());
+            
+            // Hide all prototype arrows
+            const arrows = document.querySelectorAll('.prototype-arrow');
+            arrows.forEach(arrow => {
+                arrow.style.opacity = '0';
+                arrow.style.animation = 'none';
+            });
+        }
+
+        // Show Arrow for Specific Step
+        function showArrowForStep(stepNumber) {
+            const arrow = document.getElementById(`arrow-step-${stepNumber}`);
+            if (arrow) {
+                arrow.style.opacity = '1';
+                arrow.style.animation = 'arrowAppear 0.5s ease-out, arrowMove 2s ease-in-out 0.5s';
+            }
+        }
+
+        // Hide Arrow for Specific Step
+        function hideArrowForStep(stepNumber) {
+            const arrow = document.getElementById(`arrow-step-${stepNumber}`);
+            if (arrow) {
+                arrow.style.animation = 'arrowDisappear 0.5s ease-in';
+                setTimeout(() => {
+                    arrow.style.opacity = '0';
+                    arrow.style.animation = 'none';
+                }, 500);
+            }
+        }
+
+        // Create Moving Data Packet
+        function createMovingDataPacket(startX, startY, endX, endY, duration = 2000) {
+            const packet = document.createElement('div');
+            packet.className = 'moving-data-packet';
+            packet.style.left = startX + 'px';
+            packet.style.top = startY + 'px';
+            packet.style.opacity = '1';
+            
+            document.querySelector('.container').appendChild(packet);
+            
+            // Animate movement
+            packet.style.transition = `all ${duration}ms ease-in-out`;
+            setTimeout(() => {
+                packet.style.left = endX + 'px';
+                packet.style.top = endY + 'px';
+                packet.style.opacity = '0';
+            }, 100);
+            
+            // Remove after animation
+            setTimeout(() => {
+                if (packet.parentNode) {
+                    packet.parentNode.removeChild(packet);
+                }
+            }, duration + 100);
+        }
+
+        // Start Complete Prototype Workflow
+        function startPrototypeWorkflow() {
+            // Step 1: Satellite Data Collection (0-3 seconds)
+            setTimeout(() => {
+                showSatelliteDataCollection();
+                showArrowForStep(1);
+            }, 500);
+
+            // Hide Step 1 Arrow and Start Step 2 (3-6 seconds)
+            setTimeout(() => {
+                hideArrowForStep(1);
+                showDataTransmission();
+                showArrowForStep(2);
+            }, 3000);
+
+            // Hide Step 2 Arrow and Start Step 3 (6-9 seconds)
+            setTimeout(() => {
+                hideArrowForStep(2);
+                showCNNProcessing();
+                showArrowForStep(3);
+            }, 6000);
+
+            // Hide Step 3 Arrow and Start Step 4 (9-12 seconds)
+            setTimeout(() => {
+                hideArrowForStep(3);
+                showLSTMProcessing();
+                showArrowForStep(4);
+            }, 9000);
+
+            // Hide Step 4 Arrow and Start Step 5 (12-15 seconds)
+            setTimeout(() => {
+                hideArrowForStep(4);
+                showScientistValidation();
+            }, 12000);
+
+            // Step 6: Notification Delivery (15-18 seconds)
+            setTimeout(() => {
+                showNotificationDelivery();
+            }, 15000);
+
+            // Step 7: Complete (18+ seconds)
+            setTimeout(() => {
+                updateStatus('Prototype Workflow Complete', 'success');
+                triggerAlert('prototype_complete');
+            }, 18000);
+        }
+
+        // Step 1: Show Satellite Data Collection
+        function showSatelliteDataCollection() {
+            updateStatus('🛰️ Collecting Satellite Data...', 'processing');
+            
+            // Create moving data packets from satellites to ISRO
+            const satellites = document.querySelectorAll('.satellite');
+            const isroDb = document.querySelector('.isro-database');
+            
+            satellites.forEach((satellite, index) => {
+                setTimeout(() => {
+                    const satRect = satellite.getBoundingClientRect();
+                    const isroRect = isroDb.getBoundingClientRect();
+                    const containerRect = document.querySelector('.container').getBoundingClientRect();
+                    
+                    const startX = satRect.left - containerRect.left + 20;
+                    const startY = satRect.top - containerRect.top + 10;
+                    const endX = isroRect.left - containerRect.left + 25;
+                    const endY = isroRect.top - containerRect.top + 25;
+                    
+                    createMovingDataPacket(startX, startY, endX, endY, 2000);
+                }, index * 300);
+            });
+        }
+
+        // Step 2: Show Data Transmission
+        function showDataTransmission() {
+            updateStatus('📡 Transmitting to AI Processing...', 'processing');
+            
+            // Create moving data packets from ISRO to AI Center
+            const isroDb = document.querySelector('.isro-database');
+            const aiCenter = document.querySelector('.ai-center');
+            
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const isroRect = isroDb.getBoundingClientRect();
+                    const aiRect = aiCenter.getBoundingClientRect();
+                    const containerRect = document.querySelector('.container').getBoundingClientRect();
+                    
+                    const startX = isroRect.left - containerRect.left + 25;
+                    const startY = isroRect.top - containerRect.top + 25;
+                    const endX = aiRect.left - containerRect.left + 25;
+                    const endY = aiRect.top - containerRect.top + 17;
+                    
+                    createMovingDataPacket(startX, startY, endX, endY, 2000);
+                }, i * 400);
+            }
+        }
+
+        // Step 3: Show CNN Processing
+        function showCNNProcessing() {
+            updateStatus('🧠 CNN Processing Images...', 'processing');
+            
+            const aiCenter = document.querySelector('.ai-center');
+            const rect = aiCenter.getBoundingClientRect();
+            const containerRect = document.querySelector('.container').getBoundingClientRect();
+            
+            const cnnVisual = document.createElement('div');
+            cnnVisual.className = 'cnn-visual';
+            cnnVisual.textContent = 'CNN';
+            cnnVisual.style.left = (rect.left - containerRect.left - 50) + 'px';
+            cnnVisual.style.top = (rect.top - containerRect.top) + 'px';
+            cnnVisual.style.opacity = '1';
+            
+            document.querySelector('.container').appendChild(cnnVisual);
+            
+            // Create moving data packets from AI to Earth
+            const earth = document.querySelector('.earth');
+            for (let i = 0; i < 2; i++) {
+                setTimeout(() => {
+                    const aiRect = aiCenter.getBoundingClientRect();
+                    const earthRect = earth.getBoundingClientRect();
+                    const containerRect = document.querySelector('.container').getBoundingClientRect();
+                    
+                    const startX = aiRect.left - containerRect.left + 25;
+                    const startY = aiRect.top - containerRect.top + 17;
+                    const endX = earthRect.left - containerRect.left + 50;
+                    const endY = earthRect.top - containerRect.top + 50;
+                    
+                    createMovingDataPacket(startX, startY, endX, endY, 2000);
+                }, i * 500);
+            }
+            
+            setTimeout(() => {
+                if (cnnVisual.parentNode) {
+                    cnnVisual.parentNode.removeChild(cnnVisual);
+                }
+            }, 2000);
+        }
+
+        // Step 4: Show LSTM Processing
+        function showLSTMProcessing() {
+            updateStatus('📊 LSTM Forecasting Trends...', 'processing');
+            
+            const aiCenter = document.querySelector('.ai-center');
+            const rect = aiCenter.getBoundingClientRect();
+            const containerRect = document.querySelector('.container').getBoundingClientRect();
+            
+            const lstmVisual = document.createElement('div');
+            lstmVisual.className = 'lstm-visual';
+            lstmVisual.textContent = 'LSTM';
+            lstmVisual.style.left = (rect.left - containerRect.left - 50) + 'px';
+            lstmVisual.style.top = (rect.top - containerRect.top + 30) + 'px';
+            lstmVisual.style.opacity = '1';
+            
+            document.querySelector('.container').appendChild(lstmVisual);
+            
+            // Create moving data packets from AI to Earth
+            const earth = document.querySelector('.earth');
+            for (let i = 0; i < 2; i++) {
+                setTimeout(() => {
+                    const aiRect = aiCenter.getBoundingClientRect();
+                    const earthRect = earth.getBoundingClientRect();
+                    const containerRect = document.querySelector('.container').getBoundingClientRect();
+                    
+                    const startX = aiRect.left - containerRect.left + 25;
+                    const startY = aiRect.top - containerRect.top + 17;
+                    const endX = earthRect.left - containerRect.left + 50;
+                    const endY = earthRect.top - containerRect.top + 50;
+                    
+                    createMovingDataPacket(startX, startY, endX, endY, 2000);
+                }, i * 500);
+            }
+            
+            setTimeout(() => {
+                if (lstmVisual.parentNode) {
+                    lstmVisual.parentNode.removeChild(lstmVisual);
+                }
+            }, 2000);
+        }
+
+        // Step 5: Show Scientist Validation
+        function showScientistValidation() {
+            updateStatus('👨‍🔬 Scientist Validation...', 'processing');
+            
+            const isroDb = document.querySelector('.isro-database');
+            const rect = isroDb.getBoundingClientRect();
+            const containerRect = document.querySelector('.container').getBoundingClientRect();
+            
+            const scientistVisual = document.createElement('div');
+            scientistVisual.className = 'scientist-validation';
+            scientistVisual.textContent = 'VALIDATED';
+            scientistVisual.style.left = (rect.left - containerRect.left - 60) + 'px';
+            scientistVisual.style.top = (rect.top - containerRect.top + 10) + 'px';
+            scientistVisual.style.opacity = '1';
+            
+            document.querySelector('.container').appendChild(scientistVisual);
+            
+            setTimeout(() => {
+                if (scientistVisual.parentNode) {
+                    scientistVisual.parentNode.removeChild(scientistVisual);
+                }
+            }, 2000);
+        }
+
+        // Step 6: Show Notification Delivery
+        function showNotificationDelivery() {
+            updateStatus('📱 Sending Notifications...', 'alert');
+            
+            const earth = document.querySelector('.earth');
+            const rect = earth.getBoundingClientRect();
+            const containerRect = document.querySelector('.container').getBoundingClientRect();
+            
+            // Create notification waves
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const notificationWave = document.createElement('div');
+                    notificationWave.className = 'notification-wave';
+                    notificationWave.style.left = (rect.left - containerRect.left + 50) + 'px';
+                    notificationWave.style.top = (rect.top - containerRect.top + 50) + 'px';
+                    notificationWave.style.opacity = '1';
+                    
+                    document.querySelector('.container').appendChild(notificationWave);
+                    
+                    setTimeout(() => {
+                        if (notificationWave.parentNode) {
+                            notificationWave.parentNode.removeChild(notificationWave);
+                        }
+                    }, 2000);
+                }, i * 500);
+            }
+            
+            // Trigger alert panel update
+            setTimeout(() => {
+                const alertPanel = document.getElementById('alertPanel');
+                const newAlert = document.createElement('div');
+                newAlert.className = 'alert-item';
+                newAlert.style.background = 'rgba(0, 255, 0, 0.2)';
+                newAlert.style.border = '1px solid #00ff00';
+                newAlert.innerHTML = `
+                    <span class="alert-icon">✅</span>
+                    <span>PROTOTYPE WORKFLOW COMPLETE - ${new Date().toLocaleTimeString()}</span>
+                `;
+                
+                alertPanel.appendChild(newAlert);
+                
+                setTimeout(() => {
+                    if (newAlert.parentNode) {
+                        newAlert.parentNode.removeChild(newAlert);
+                    }
+                }, 8000);
+            }, 1500);
         }
 
         // Animate Data Flow
