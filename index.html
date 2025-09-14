@@ -10,6 +10,45 @@
             padding: 0;
             box-sizing: border-box;
         }
+        * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      width: 100%;
+      height: 70px;
+      background-color: #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .navbar .logo-left img,
+    .navbar .logo-right img {
+      height: 50px;
+      width: auto;
+    }
+
+    .navbar .middle-text {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
 
         body {
             background: 
@@ -903,6 +942,17 @@
     </style>
 </head>
 <body>
+    <div class="navbar">
+    <div class="logo-left">
+      <img src="https://res.cloudinary.com/divvthkh8/image/upload/v1757890082/VKR_LOGO1_npi7jh.jpg" alt="VKR Logo">
+    </div>
+
+    <div class="middle-text">AI-Powered Disaster Monitoring System</div>
+
+    <div class="logo-right">
+      <img src="https://res.cloudinary.com/divvthkh8/image/upload/v1757890092/isro_logo_dh5sib.jpg" alt="ISRO Logo">
+    </div>
+  </div>
     <div class="container">
         <!-- Header -->
         <div class="header">
